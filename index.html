@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Countdown" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Countdown</title>
+  </head>
+  <body>
+    <section class="countdown">
+      <div class="my-day">
+        My birthday is on Sunday, 13 January 2023,12:00 am.
+      </div>
+      <div class="deadline">
+        <div class="format">
+          <div>
+            <h3 class="days">22</h3>
+            <span>days</span>
+          </div>
+        </div>
+
+        <div class="format">
+          <div>
+            <h3 class="hour">120</h3>
+            <span>hours</span>
+          </div>
+        </div>
+        <div class="format">
+          <div>
+            <h3 class="min">32</h3>
+            <span>minutes</span>
+          </div>
+        </div>
+        <div class="format">
+          <div>
+            <h3 class="sec">40</h3>
+            <span>seconds</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "November",
+        "December",
+      ];
+      const weeks = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+
+      let birthDay = document.querySelector(".my-day");
+      let deadLine = document.querySelector(".deadline");
+      let boxes = document.querySelectorAll(".format h3");
+
+      let date = new Date(2023, 6, 1, 10, 30, 00);
+
+      birthDay.textContent = `July is coming  on ${
+        weeks[date.getDay()]
+      } , ${date.getDate()} ${
+        months[date.getMonth()]
+      } ${date.getFullYear()} ${date.getHours()}:${date.getMinutes()} am`;
+
+      let time = date.getTime();
+      console.log(time);
+
+      function getRemainingTime() {
+        let today = new Date().getTime();
+        let t = time - today;
+
+        //time values
+        const oneDay = 24 * 60 * 60 * 1000;
+        const oneHour = 60 * 60 * 1000;
+        const oneMin = 60 * 1000;
+        //find all values
+        let days = Math.floor(t / oneDay);
+        let hours = Math.floor((t % oneDay) / oneHour);
+        let Min = Math.floor((t % oneHour) / oneMin);
+        let sec = Math.floor((t % oneMin) / 1000);
+
+        const value = [days, hours, Min, sec];
+        function format(values) {
+          if (values < 10) {
+            return (values = `0${values}`);
+          }
+          return values;
+        }
+        boxes.forEach((item, index) => {
+          item.innerHTML = format(value[index]);
+        });
+        if (t < 0) {
+          clearInterval(countdown);
+          deadLine.innerHTML = `<h3>Hey buddy , it's your birthday .let's celebrate.</h3>`;
+        }
+      }
+      let countdown = setInterval(getRemainingTime, 1000);
+      getRemainingTime();
+    </script>
+  </body>
+</html>
